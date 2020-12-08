@@ -39,6 +39,7 @@ function UIrun() {
 	UIpatternrollInit();
 	UIrenderPopupInit();
 	UImainAnalyserInit();
+	UImidiPopupInit();
 	UIcompositionsInit();
 	UIsettingsPopupInit();
 	UIshortcutsPopupInit();

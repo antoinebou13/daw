@@ -1,6 +1,44 @@
 "use strict";
 
 function UIpatternsInit() {
+	const orderBuff = new gsuiReorder({
+		rootElement: DOM.buffPatterns,
+		itemSelector: "#buffPatterns .pattern",
+		handleSelector: "#buffPatterns .pattern-grip",
+		parentSelector: "#buffPatterns"
+	}),
+		orderDrums = new gsuiReorder({
+			rootElement: DOM.keysPatterns,
+			itemSelector: "#drumsPatterns .pattern",
+			handleSelector: "#drumsPatterns .pattern-grip",
+			parentSelector: "#drumsPatterns"
+		}),
+		orderKeys = new gsuiReorder({
+			rootElement: DOM.drumsPatterns,
+			itemSelector: "#keysPatterns .pattern",
+			handleSelector: "#keysPatterns .pattern-grip",
+			parentSelector: ".synth-patterns"
+		});
+
+	window.UIsvgForms.bufferHD.hdMode( true );
+	window.UIsvgForms.bufferHD.setDefaultViewbox( 260, 48 );
+	DOM.drumsNew.onclick = () => DAW.callAction( "addPatternDrums" );
+	DOM.buffPatterns.addEventListener( "click", UIpatternsOnclick.bind( null, "buffer" ) );
+	DOM.keysPatterns.addEventListener( "click", UIpatternsOnclick.bind( null, "keys" ) );
+	DOM.drumsPatterns.addEventListener( "click", UIpatternsOnclick.bind( null, "drums" ) );
+	document.addEventListener( "drop", e => {
+		DAW.dropAudioFiles( e.dataTransfer.files );
+	} );
+	// orderBuff.onchange = UIpatternsReorderChange.bind( null, DOM.buffPatterns );
+	// orderDrums.onchange = UIpatternsReorderChange.bind( null, DOM.drumsPatterns );
+	// orderKeys.onchange = UIpatternsKeysReorderChange;
+	// orderBuff.setDataTransfert =
+	// orderKeys.setDataTransfert =
+	// orderDrums.setDataTransfert = UIpatternsDataTransfert;
+}
+
+function UIpatternsDataTransfert( elPat ) {
+	const id = elPat.dataset.id;
 	const win = UIwindows.window( "blocks" );
 
 	UIpatterns.setDAWCore( DAW );

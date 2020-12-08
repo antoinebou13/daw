@@ -1,24 +1,24 @@
 #!/bin/bash
 
 declare -a HEADER=(
-	'<!DOCTYPE html>'
-	'<html lang="en">'
-	'<head>'
-	'<title>GridSound</title>'
-	'<meta charset="UTF-8"/>'
-	'<meta name="viewport" content="width=device-width, user-scalable=no"/>'
-	'<meta name="description" content="A free and Open-Source DAW (digital audio workstation)"/>'
-	'<meta name="google" content="notranslate"/>'
-	'<meta property="og:type" content="website"/>'
-	'<meta property="og:title" content="GridSound"/>'
-	'<meta property="og:url" content="https://gridsound.com/daw/"/>'
-	'<meta property="og:image" content="https://gridsound.com/assets/og-image.jpg"/>'
-	'<meta property="og:image:width" content="800"/>'
-	'<meta property="og:image:height" content="400"/>'
-	'<meta property="og:description" content="a free and open source DAW (digital audio workstation)"/>'
-	'<meta name="theme-color" content="#3a5158"/>'
-	'<link rel="manifest" href="manifest.json"/>'
-	'<link rel="shortcut icon" href="../assets/favicon.png"/>'
+    '<!DOCTYPE html>'
+    '<html lang="en">'
+    '<head>'
+    '<title>GridSound</title>'
+    '<meta charset="UTF-8"/>'
+    '<meta name="viewport" content="width=device-width, user-scalable=no"/>'
+    '<meta name="description" content="A free and Open-Source DAW (digital audio workstation)"/>'
+    '<meta name="google" content="notranslate"/>'
+    '<meta property="og:type" content="website"/>'
+    '<meta property="og:title" content="GridSound"/>'
+    '<meta property="og:url" content="https://gridsound.com/daw/"/>'
+    '<meta property="og:image" content="https://gridsound.com/assets/og-image.jpg"/>'
+    '<meta property="og:image:width" content="800"/>'
+    '<meta property="og:image:height" content="400"/>'
+    '<meta property="og:description" content="a free and open source DAW (digital audio workstation)"/>'
+    '<meta name="theme-color" content="#3a5158"/>'
+    '<link rel="manifest" href="manifest.json"/>'
+    '<link rel="shortcut icon" href="assets/favicon.png"/>'
 )
 
 declare -a HEADEREND=(
@@ -132,7 +132,7 @@ declare -a HTMLfiles=(
 )
 
 declare -a JSfilesProd=(
-	"src/initServiceWorker.js"
+    "src/initServiceWorker.js"
 )
 
 declare -a JSfiles=(
@@ -431,91 +431,120 @@ declare -a JSfiles=(
 )
 
 jsMainFile() {
-	echo '"use strict";'
-	cat "${JSfilesProd[@]}" | grep -v '"use strict";'
-	cat "${JSfiles[@]}" | grep -v '"use strict";'
+    echo '"use strict";'
+    cat "${JSfilesProd[@]}" | grep -v '"use strict";'
+    cat "${JSfiles[@]}" | grep -v '"use strict";'
 }
 
 buildDev() {
-	filename='index.html'
-	echo "Build $filename"
-	printf '%s\n' "${HEADER[@]}" > $filename;
-	printf '<link rel="stylesheet" href="%s"/>\n' "${CSSfiles[@]}" >> $filename;
-	printf '%s\n' "${HEADEREND[@]}" >> $filename;
-	cat "${HTMLfiles[@]}" >> $filename
-	echo '<script>function lg( a ) { return console.log.apply( console, arguments ), a; }</script>' >> $filename
-	printf '<script src="%s"></script>\n' "${JSfiles[@]}" >> $filename;
-	echo '</body>' >> $filename
-	echo '</html>' >> $filename
+    filename='index.html'
+    echo "Build $filename"
+    printf '%s\n' "${HEADER[@]}" > $filename;
+    printf '<link rel="stylesheet" href="%s"/>\n' "${CSSfiles[@]}" >> $filename;
+    printf '%s\n' "${HEADEREND[@]}" >> $filename;
+    cat "${HTMLfiles[@]}" >> $filename
+    echo '<script>function lg( a ) { return console.log.apply( console, arguments ), a; }</script>' >> $filename
+    printf '<script src="%s"></script>\n' "${JSfiles[@]}" >> $filename;
+    echo '</body>' >> $filename
+    echo '</html>' >> $filename
 }
 
 buildProd() {
-	filename='index-prod.html'
-	echo "Build $filename"
-	printf '%s\n' "${HEADER[@]}" > $filename;
-	echo '<style>' >> $filename
-	cat "${CSSfiles[@]}" >> $filename
-	echo '</style>' >> $filename
-	printf '%s\n' "${HEADEREND[@]}" >> $filename;
-	cat "${HTMLfiles[@]}" >> $filename
-	echo '<script>' >> $filename
-	jsMainFile >> $filename
-	echo '</script>' >> $filename
-	echo '</body>' >> $filename
-	echo '</html>' >> $filename
+    filename='index-prod.html'
+    echo "Build $filename"
+    printf '%s\n' "${HEADER[@]}" > $filename;
+    echo '<style>' >> $filename
+    cat "${CSSfiles[@]}" >> $filename
+    echo '</style>' >> $filename
+    printf '%s\n' "${HEADEREND[@]}" >> $filename;
+    cat "${HTMLfiles[@]}" >> $filename
+    echo '<script>' >> $filename
+    jsMainFile >> $filename
+    echo '</script>' >> $filename
+    echo '</body>' >> $filename
+    echo '</html>' >> $filename
 }
 
 buildTests() {
-	filename='tests.html'
-	echo "Build $filename"
-	printf '%s\n' "${HEADER[@]}" > $filename
-	echo '<link rel="stylesheet" href="assets/qunit/qunit-2.9.2.css"/>' >> $filename
-	echo '<link rel="stylesheet" href="tests/tests.css"/>' >> $filename
-	echo '<style>' >> $filename
-	cat "${CSSfiles[@]}" >> $filename
-	echo '</style>' >> $filename
-	printf '%s\n' "${HEADEREND[@]}" >> $filename
-	echo '<div id="qunit"></div>' >> $filename
-	echo '<div id="qunit-fixture"></div>' >> $filename
-	cat "${HTMLfiles[@]}" >> $filename
-	echo '<script>' >> $filename
-	jsMainFile >> $filename
-	echo '</script>' >> $filename
-	echo '<script src="assets/qunit/qunit-2.9.2.js"></script>' >> $filename
-	echo '<script src="tests/tests.js"></script>' >> $filename
-	echo '</body>' >> $filename
-	echo '</html>' >> $filename
+    filename='tests.html'
+    echo "Build $filename"
+    printf '%s\n' "${HEADER[@]}" > $filename
+    echo '<link rel="stylesheet" href="assets/qunit/qunit-2.9.2.css"/>' >> $filename
+    echo '<link rel="stylesheet" href="tests/tests.css"/>' >> $filename
+    echo '<style>' >> $filename
+    cat "${CSSfiles[@]}" >> $filename
+    echo '</style>' >> $filename
+    printf '%s\n' "${HEADEREND[@]}" >> $filename
+    echo '<div id="qunit"></div>' >> $filename
+    echo '<div id="qunit-fixture"></div>' >> $filename
+    cat "${HTMLfiles[@]}" >> $filename
+    echo '<script>' >> $filename
+    jsMainFile >> $filename
+    echo '</script>' >> $filename
+    echo '<script src="assets/qunit/qunit-2.9.2.js"></script>' >> $filename
+    echo '<script src="tests/tests.js"></script>' >> $filename
+    echo '</body>' >> $filename
+    echo '</html>' >> $filename
 }
 
 lint() {
-	stylelint "${CSSfiles[@]}"
-	jsMainFile > __lintMain.js
-	eslint __lintMain.js && rm __lintMain.js
+    stylelint "${CSSfiles[@]}"
+    jsMainFile > __lintMain.js
+    eslint __lintMain.js && rm __lintMain.js
 }
 
 updateDep() {
-	git submodule init
-	git submodule update --remote
+    git submodule init
+    git submodule update --remote
+    cd gs-utils
+    ./build.sh
+    cd ..
+}
+
+buildServer() {
+    filename1='package.json'
+	filename2='server.js'
+    echo "Build $filename1"
+	printf '%s\n' "${packageJSON[@]}" > $filename1
+	echo "Build $filename2"
+	printf '%s\n' "${serverJs[@]}" > $filename2
+	npm i
+	npm run start
+	echo 'open the server at localhost:3000 in a browser'
 }
 
 if [ $# = 0 ]; then
-	echo '          -------------------------------'
-	echo '        .:: GridSound build shellscript ::.'
-	echo '        -----------------------------------'
-	echo ''
-	echo './build.sh dev ---> create "index.html" for development'
-	echo './build.sh prod --> create "index-prod.html" for production'
-	echo './build.sh tests -> create "tests.html" for testing'
-	echo './build.sh lint --> launch the JS/CSS linters (ESLint and Stylelint)'
-	echo './build.sh dep ---> update all the submodules'
-elif [ $1 = "dep" ]; then
-	updateDep
-elif [ $1 = "dev" ]; then
-	buildDev
-elif [ $1 = "prod" ]; then
-	buildProd
-elif [ $1 = "tests" ]; then
-	buildTests
-elif [ $1 = "lint" ]; then
-	lint
+    echo '          -------------------------------'
+    echo '        .:: GridSound build shellscript ::.'
+    echo '        -----------------------------------'
+    echo ''
+    echo './build.sh dep ---> update all the submodules'
+    echo './build.sh dev ---> create "index.html" for development'
+    echo './build.sh prod --> create "index-prod.html" for production'
+    echo './build.sh tests -> create "tests.html" for testing'
+    echo './build.sh lint --> launch the JS/CSS linters (ESLint and Stylelint)'
+    echo './build.sh server --> create simple static serve with node and express'
+    elif [ $1 = "dep" ]; then
+    updateDep
+    elif [ $1 = "dev" ]; then
+    buildDev
+    elif [ $1 = "prod" ]; then
+    buildProd
+    elif [ $1 = "tests" ]; then
+    buildTests
+    elif [ $1 = "lint" ]; then
+    lint
+	elif [ $1 = "server" ]; then
+    buildServer
+	elif [ $1 = "help" ] || [ $1 = "--help" ]; then
+    echo '          -------------------------------'
+    echo '        .:: GridSound build shellscript ::.'
+    echo '        -----------------------------------'
+    echo ''
+    echo './build.sh dep ---> update all the submodules'
+    echo './build.sh dev ---> create "index.html" for development'
+    echo './build.sh prod --> create "index-prod.html" for production'
+    echo './build.sh tests -> create "tests.html" for testing'
+    echo './build.sh lint --> launch the JS/CSS linters (ESLint and Stylelint)'
+    echo './build.sh server --> create simple static serve with node and express'
 fi
